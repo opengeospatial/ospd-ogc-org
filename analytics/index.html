@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <link rel="icon" href="logos--google-analytics.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="analytics.js?v=0.6"></script>
+  </head>
+  <style>
+    body{
+        font-family: "Montserrat", sans-serif;
+    }
+    .card{
+        box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgba(0, 0, 0, .08), 0 4px 6px -2px rgba(0, 0, 0, .01);
+        border-radius: 0;
+    }
+    .card-header span {
+        font-weight: 600;
+    }  
+    footer a {
+        color: inherit;
+        text-decoration: none;
+    }     
+    footer a:hover {
+        text-decoration: line-through;
+    }      
+  </style>
+  <body style="background-color: rgb(241, 245, 249)">
+    <nav class="navbar sticky-top navbar-light mb-5" style="background-color: #fff">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+        <img src="logos--google-analytics.svg" alt="Analytics Dashboard" width="21" height="24" class="d-inline-block align-text-top">    
+        Analytics Dashboard
+        </a>
+      </div>
+    </nav>
+    <div class="container mt-3">
+      <div class="row mb-3">
+        <div class="col">
+          <div class="card border-light mb-3">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+              <span>User Visits</span>
+              <select id="userVisitsDateRangeSelector" class="form-select w-auto">
+                <option value="1daysAgo">Yesterday</option>
+                <option value="7daysAgo">Last 7 Days</option>
+                <option value="30daysAgo" selected>Last 30 Days</option>
+                <option value="90daysAgo">Last 90 Days</option>
+                <option value="180daysAgo">Last 180 Days</option>
+                <option value="365daysAgo">Last Year</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div id="userVisitsChart"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-light mb-3">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+              <span>Traffic Source Types</span>
+              <select id="trafficSourcesDateRangeSelector" class="form-select w-auto">
+                <option value="1daysAgo">Yesterday</option>
+                <option value="7daysAgo">Last 7 Days</option>
+                <option value="30daysAgo" selected>Last 30 Days</option>
+                <option value="90daysAgo">Last 90 Days</option>
+                <option value="180daysAgo">Last 180 Days</option>
+                <option value="365daysAgo">Last Year</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div id="trafficSourcesChart"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div class="card border-light mb-3">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+              <span>Regional User Visits</span>
+              <select id="dateRangeSelector" class="form-select w-auto">
+                <option value="1daysAgo">Yesterday</option>
+                <option value="7daysAgo">Last 7 Days</option>
+                <option value="30daysAgo" selected>Last 30 Days</option>
+                <option value="90daysAgo">Last 90 Days</option>
+                <option value="180daysAgo">Last 180 Days</option>
+                <option value="365daysAgo">Last Year</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div id="regionChart"></div>
+                </div>
+                <div class="col">
+                  <div id="visitorsChart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div class="card border-light mb-3">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+              <span>Average Session Duration <small>(in seconds)</small></span>
+              <select id="averageSessionDurationSelector" class="form-select w-auto">
+                <option value="1daysAgo">Yesterday</option>
+                <option value="7daysAgo">Last 7 Days</option>
+                <option value="30daysAgo" selected>Last 30 Days</option>
+                <option value="90daysAgo">Last 90 Days</option>
+                <option value="180daysAgo">Last 180 Days</option>
+                <option value="365daysAgo">Last Year</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div id="averageSessionDurationChart"></div>
+            </div>
+          </div>
+        </div>    
+        <div class="col">
+          <div class="card border-light mb-3">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+              <span>New VS Returning Users</span>
+              <select id="newVsReturningDateRangeSelector" class="form-select w-auto">
+                <option value="1daysAgo">Yesterday</option>
+                <option value="7daysAgo">Last 7 Days</option>
+                <option value="30daysAgo" selected>Last 30 Days</option>
+                <option value="90daysAgo">Last 90 Days</option>
+                <option value="180daysAgo">Last 180 Days</option>
+                <option value="365daysAgo">Last Year</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div id="newVsReturningChart"></div>
+            </div>
+          </div>
+        </div>	
+      </div>
+      <div class="row mb-3">      
+        <div class="col">
+          <div class="card border-light mb-3">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+              <span>Device Category</span>
+              <select id="deviceCategoryDateRangeSelector" class="form-select w-auto">
+                <option value="1daysAgo">Yesterday</option>
+                <option value="7daysAgo">Last 7 Days</option>
+                <option value="30daysAgo" selected>Last 30 Days</option>
+                <option value="90daysAgo">Last 90 Days</option>
+                <option value="180daysAgo">Last 180 Days</option>
+                <option value="365daysAgo">Last Year</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div id="deviceCategoryChart"></div>
+            </div>
+          </div>
+        </div>	    
+	<div class="col">
+          <div class="card border-light mb-3 d-none">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+              <span>Operating System</span>
+              <select id="operatingSystemDateRangeSelector" class="form-select w-auto">
+                <option value="1daysAgo">Yesterday</option>
+                <option value="7daysAgo">Last 7 Days</option>
+                <option value="30daysAgo" selected>Last 30 Days</option>
+                <option value="90daysAgo">Last 90 Days</option>
+                <option value="180daysAgo">Last 180 Days</option>
+                <option value="365daysAgo">Last Year</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div id="operatingSystemChart"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+          <span class="mb-3 mb-md-0 text-muted">© 2024 <a href="https://hartis.org">HARTIS</a> Integrated Nautical Services</span>
+        </div>
+        <div class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        </div>
+      </footer>
+    </div>
+    <script>
+      var activeUsers = [["country","activeUsers"],["United States",5],["Germany",2],["Greece",1]];
+      var sessionMedium = [["sessionMedium","sessions"],["organic",8],["(none)",7],["referral",2]];
+      var usersOverTime = [["date","activeUsers"],["20240730",3],["20240802",2],["20240815",2],["20240731",1],["20240801",1],["20240805",1],["20240812",1]];
+      var deviceCategory = [["deviceCategory","sessions"],["desktop",16],["mobile",1]];
+      var operatingSystem = [["operatingSystem","sessions"],["Macintosh",11],["Windows",5],["iOS",1]];
+      var averageSession = [["date","averageSessionDuration"],["20240805",842],["20240730",672],["20240802",14],["20240815",4],["20240801",3],["20240812",2],["20240731",1]];
+      var newVsReturning = [["newVsReturning","sessions"],["returning",8],["new",7],["(not set)",2]];
+    </script>
+  </body>
+</html>
+
